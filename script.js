@@ -6,14 +6,23 @@ const COMMON_PASSWORDS = new Set([
 ]);
 const MIN_SEQUENTIAL_LENGTH = 4;
 const GENERATED_PASSWORD_DEFAULT_LENGTH = 18;
-// Includes quotes, forward slash (/), and backslash (\) with JS escaping.
-const SPECIAL_CHAR_SET = "!@#$%^&*()_+-=[]{}|;:,.<>?`~'\"\\\\/";
+const SPECIAL_CHAR_SET = [
+  "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "-", "=",
+  "[", "]", "{", "}", "|", ";", ":", ",", ".", "<", ">", "?", "`", "~",
+  "'", "\"", "\\", "/"
+].join("");
+
+function escapeForRegexCharClass(chars) {
+  return chars.replace(/[\\^$.*+?()[\]{}|/-]/g, "\\$&");
+}
+
+const SPECIAL_CHAR_REGEX = new RegExp(`[${escapeForRegexCharClass(SPECIAL_CHAR_SET)}]`);
 
 const patterns = {
   uppercase: /[A-Z]/,
   lowercase: /[a-z]/,
   number: /\d/,
-  special: /[^A-Za-z0-9\s]/
+  special: SPECIAL_CHAR_REGEX
 };
 
 const ui = {
@@ -182,7 +191,7 @@ function updateStrength() {
 
 function secureRandomInt(max) {
   if (!Number.isInteger(max) || max <= 0) {
-    throw new RangeError("secureRandomInt requires a positive integer max.");
+    throw new RangeError("secureRandomInt requires an integer greater than 0.");
   }
   const maxUint32 = 0x100000000;
   const acceptableLimit = Math.floor(maxUint32 / max) * max;
