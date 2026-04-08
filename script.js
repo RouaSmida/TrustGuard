@@ -13,7 +13,7 @@ const SPECIAL_CHAR_SET = [
 ].join("");
 
 function escapeForRegexCharClass(chars) {
-  return chars.replace(/[\\^$.*+?()[\]{}|/-]/g, "\\$&");
+  return chars.replace(/[-\\^$.*+?()[\]{}|/]/g, "\\$&");
 }
 
 const SPECIAL_CHAR_REGEX = new RegExp(`[${escapeForRegexCharClass(SPECIAL_CHAR_SET)}]`);
@@ -256,7 +256,7 @@ ui.copy.addEventListener("click", async () => {
       ui.copy.textContent = "Copy";
     }, 1000);
   } catch {
-    ui.copy.textContent = "Copy failed";
+    ui.copy.textContent = "Copy failed - copy manually";
     setTimeout(() => {
       ui.copy.textContent = "Copy";
     }, 1000);
