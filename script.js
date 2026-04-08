@@ -199,7 +199,7 @@ function generateStrongPassword(length = 18) {
   const lower = "abcdefghijklmnopqrstuvwxyz";
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const nums = "0123456789";
-  const special = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+  const special = "!@#$%^&*()_+-=[]{}|;:,.<>?`~'\"\\\\/";
   const all = lower + upper + nums + special;
 
   // Ensure baseline diversity by forcing one char from each set.
