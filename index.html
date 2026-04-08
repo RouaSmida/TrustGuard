@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustGuard | Password Strength Tester</title>
+  <link rel="stylesheet" href="/home/runner/work/TrustGuard/TrustGuard/style.css" />
+</head>
+<body>
+  <main class="app" role="main">
+    <section class="card" aria-labelledby="app-title">
+      <p class="badge">OWASP-Informed Security Tool</p>
+      <h1 id="app-title">TrustGuard Password Strength Tester</h1>
+      <p class="subtitle">Evaluate password strength in real time with practical security feedback.</p>
+
+      <div class="field">
+        <label for="username">Username (for inclusion check)</label>
+        <input id="username" type="text" placeholder="e.g., roua" autocomplete="username" />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-row">
+          <input id="password" type="password" placeholder="Enter a password" autocomplete="new-password" />
+          <button id="toggle-visibility" type="button" class="button subtle">Show</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="generate-password" type="button" class="button">Generate Strong Password</button>
+        <button id="copy-password" type="button" class="button subtle">Copy</button>
+      </div>
+
+      <section class="result" aria-live="polite">
+        <div class="meter-header">
+          <span id="strength-label" class="strength-label weak">Weak</span>
+          <span id="score">0 / 100</span>
+        </div>
+        <div class="meter-track" aria-hidden="true">
+          <div id="meter-bar" class="meter-bar" style="width: 0%"></div>
+        </div>
+        <p id="entropy" class="entropy">Estimated entropy: 0 bits</p>
+        <ul id="feedback" class="feedback-list">
+          <li>Start typing to see recommendations.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="/home/runner/work/TrustGuard/TrustGuard/script.js"></script>
+</body>
+</html>
