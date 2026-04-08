@@ -286,14 +286,20 @@ const PasswordGenerator = (() => {
 
   /**
    * Generate a cryptographically random integer in [0, max).
-   * Uses crypto.getRandomValues when available, falls back to Math.random.
+   * Uses rejection sampling to eliminate modulo bias.
+   * Falls back to Math.random when the Web Crypto API is unavailable.
    * @param {number} max
    * @returns {number}
    */
   function secureRandom(max) {
     if (window.crypto && window.crypto.getRandomValues) {
+      // Rejection sampling: discard values in the biased tail region so that
+      // every output value has an exactly equal probability.
+      const limit = Math.floor(0x100000000 / max) * max; // largest multiple of max ≤ 2^32
       const arr = new Uint32Array(1);
-      window.crypto.getRandomValues(arr);
+      do {
+        window.crypto.getRandomValues(arr);
+      } while (arr[0] >= limit);
       return arr[0] % max;
     }
     return Math.floor(Math.random() * max);

@@ -231,7 +231,7 @@ h1 {
 }
 
 .meter-track {
-  height: 10px;
+  height: 12px;
   background: var(--border);
   border-radius: 999px;
   overflow: hidden;
