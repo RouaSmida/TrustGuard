@@ -176,8 +176,23 @@ function updateStrength() {
   renderResult(result);
 }
 
+function secureRandomInt(max) {
+  if (!Number.isInteger(max) || max <= 0) return 0;
+  const maxUint32 = 0x100000000;
+  const acceptableLimit = Math.floor(maxUint32 / max) * max;
+  const buffer = new Uint32Array(1);
+  let value;
+
+  do {
+    window.crypto.getRandomValues(buffer);
+    value = buffer[0];
+  } while (value >= acceptableLimit);
+
+  return value % max;
+}
+
 function randomChar(charset) {
-  return charset[Math.floor(Math.random() * charset.length)];
+  return charset[secureRandomInt(charset.length)];
 }
 
 function generateStrongPassword(length = 18) {
@@ -196,7 +211,7 @@ function generateStrongPassword(length = 18) {
   }
 
   for (let i = generated.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = secureRandomInt(i + 1);
     [generated[i], generated[j]] = [generated[j], generated[i]];
   }
 

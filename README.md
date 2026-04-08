@@ -34,7 +34,7 @@ TrustGuard helps users create safer passwords by combining clear UX with practic
 ## How to Run the Project
 
 1. Clone or download the repository.
-2. Open `/home/runner/work/TrustGuard/TrustGuard/index.html` in your browser.
+2. Open `index.html` in your browser.
 3. Type a password and observe the real-time score and guidance.
 
 ## OWASP Compliance Explanation
