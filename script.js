@@ -4,7 +4,9 @@ const COMMON_PASSWORDS = new Set([
   "111111", "abc123", "password1", "123123", "000000", "iloveyou",
   "admin", "welcome", "letmein", "dragon"
 ]);
-// Includes quotes, slash and backslash (escaped in JS string syntax).
+const MIN_SEQUENTIAL_LENGTH = 4;
+const GENERATED_PASSWORD_DEFAULT_LENGTH = 18;
+// Includes quotes, forward slash (/), and backslash (\) with JS escaping.
 const SPECIAL_CHAR_SET = "!@#$%^&*()_+-=[]{}|;:,.<>?`~'\"\\\\/";
 
 const patterns = {
@@ -29,8 +31,8 @@ const ui = {
 
 function hasSequentialPattern(value) {
   const normalized = value.toLowerCase();
-  for (let i = 0; i <= normalized.length - 4; i++) {
-    const segment = normalized.slice(i, i + 4);
+  for (let i = 0; i <= normalized.length - MIN_SEQUENTIAL_LENGTH; i++) {
+    const segment = normalized.slice(i, i + MIN_SEQUENTIAL_LENGTH);
     let ascending = true;
     let descending = true;
 
@@ -179,7 +181,9 @@ function updateStrength() {
 }
 
 function secureRandomInt(max) {
-  if (!Number.isInteger(max) || max <= 0) return 0;
+  if (!Number.isInteger(max) || max <= 0) {
+    throw new RangeError("secureRandomInt requires a positive integer max.");
+  }
   const maxUint32 = 0x100000000;
   const acceptableLimit = Math.floor(maxUint32 / max) * max;
   const buffer = new Uint32Array(1);
@@ -197,7 +201,8 @@ function randomChar(charset) {
   return charset[secureRandomInt(charset.length)];
 }
 
-function generateStrongPassword(length = 18) {
+// 18 chars offers a strong default while keeping generated passwords practical to use.
+function generateStrongPassword(length = GENERATED_PASSWORD_DEFAULT_LENGTH) {
   const lower = "abcdefghijklmnopqrstuvwxyz";
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const nums = "0123456789";

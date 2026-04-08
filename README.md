@@ -91,7 +91,7 @@ TrustGuard adopts a practical rule-based + entropy approach suitable for front-e
 
 ### Components
 - `index.html`: UI structure and controls
-- `style.css`: dark cybersecurity-themed visuals and responsive layout
+- `style.css`: Dark cybersecurity-themed visuals and responsive layout
 - `script.js`:
   - Password analysis engine
   - Pattern detection utilities
