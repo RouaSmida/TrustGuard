@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustGuard – Password Strength Tester</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background grid decoration -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main class="container" role="main">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">🔐</span>
+        <h1>TrustGuard</h1>
+      </div>
+      <p class="tagline">OWASP-Based Password Strength Tester</p>
+    </header>
+
+    <!-- Main Card -->
+    <section class="card" aria-label="Password tester">
+
+      <!-- Username field (context check) -->
+      <div class="field-group">
+        <label for="username-input" class="field-label">
+          Username
+          <span class="hint">(optional — used for context check)</span>
+        </label>
+        <input
+          id="username-input"
+          type="text"
+          class="text-input"
+          placeholder="e.g. johndoe"
+          autocomplete="username"
+        />
+      </div>
+
+      <!-- Password input row -->
+      <div class="field-group">
+        <label for="password-input" class="field-label">Password</label>
+        <div class="input-wrapper">
+          <input
+            id="password-input"
+            type="password"
+            class="text-input"
+            placeholder="Enter your password…"
+            autocomplete="new-password"
+            spellcheck="false"
+            aria-describedby="strength-label score-display"
+          />
+          <!-- Show/Hide toggle -->
+          <button
+            id="toggle-visibility"
+            class="icon-btn"
+            type="button"
+            aria-label="Show password"
+            title="Toggle visibility"
+          >
+            <svg class="icon eye-open" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg class="icon eye-off hidden" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Strength Meter -->
+      <div class="meter-section" aria-live="polite">
+        <div class="meter-header">
+          <span id="strength-label" class="strength-label">—</span>
+          <span id="score-display" class="score-display">
+            Score: <strong id="score-value">0</strong>/100
+          </span>
+        </div>
+        <div
+          class="meter-track"
+          role="progressbar"
+          aria-valuenow="0"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-labelledby="strength-label"
+        >
+          <div id="meter-bar" class="meter-bar"></div>
+        </div>
+        <div class="entropy-row">
+          <span class="entropy-label">Entropy:</span>
+          <span id="entropy-value" class="entropy-value">— bits</span>
+        </div>
+      </div>
+
+      <!-- Feedback list -->
+      <ul id="feedback-list" class="feedback-list" aria-label="Password feedback" aria-live="polite"></ul>
+
+      <!-- Action buttons -->
+      <div class="actions">
+        <button id="generate-btn" class="btn btn-primary" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          Generate Strong Password
+        </button>
+
+        <button id="copy-btn" class="btn btn-secondary" type="button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="copy-label">Copy</span>
+        </button>
+      </div>
+
+    </section><!-- /.card -->
+
+    <!-- OWASP badge footer -->
+    <footer class="app-footer">
+      <span class="owasp-badge">⚙ OWASP compliant evaluation</span>
+      <span class="footer-sep">·</span>
+      <a
+        href="https://owasp.org/www-community/password-special-characters"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >OWASP Password Guidelines</a>
+    </footer>
+
+  </main><!-- /.container -->
+
+  <script src="script.js"></script>
+</body>
+</html>
