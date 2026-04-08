@@ -4,6 +4,8 @@ const COMMON_PASSWORDS = new Set([
   "111111", "abc123", "password1", "123123", "000000", "iloveyou",
   "admin", "welcome", "letmein", "dragon"
 ]);
+// Includes quotes, slash and backslash (escaped in JS string syntax).
+const SPECIAL_CHAR_SET = "!@#$%^&*()_+-=[]{}|;:,.<>?`~'\"\\\\/";
 
 const patterns = {
   uppercase: /[A-Z]/,
@@ -57,7 +59,7 @@ function getCharacterPoolSize(password) {
   if (patterns.lowercase.test(password)) pool += 26;
   if (patterns.uppercase.test(password)) pool += 26;
   if (patterns.number.test(password)) pool += 10;
-  if (patterns.special.test(password)) pool += 33;
+  if (patterns.special.test(password)) pool += SPECIAL_CHAR_SET.length;
   return pool;
 }
 
@@ -199,11 +201,10 @@ function generateStrongPassword(length = 18) {
   const lower = "abcdefghijklmnopqrstuvwxyz";
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const nums = "0123456789";
-  const special = "!@#$%^&*()_+-=[]{}|;:,.<>?`~'\"\\\\/";
-  const all = lower + upper + nums + special;
+  const all = lower + upper + nums + SPECIAL_CHAR_SET;
 
   // Ensure baseline diversity by forcing one char from each set.
-  const required = [randomChar(lower), randomChar(upper), randomChar(nums), randomChar(special)];
+  const required = [randomChar(lower), randomChar(upper), randomChar(nums), randomChar(SPECIAL_CHAR_SET)];
   const generated = [...required];
 
   while (generated.length < length) {
